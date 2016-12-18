@@ -1,0 +1,39 @@
+h2{
+    margin: 0;
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style: none;
+}
+li:nth-child(odd){
+    background-color: lightcoral;
+    color: red;
+}
+li:nth-child(even){
+    background-color: lightblue;
+    color: blue;
+}
+
+.div-hp{
+    padding: 0 !important;
+}
+
+.barra-hp{
+    padding: 0 !important;
+    color: white;
+    text-align: center;
+    background-color: red;
+}
+.barra-hp-interna{
+    padding: 0 !important;
+    height: 50px;
+    background-color: #0ecd00;
+    transition: width 1.5s;
+}
+.div-botoes-acao{
+    float:none;
+    margin: 0 auto;
+}

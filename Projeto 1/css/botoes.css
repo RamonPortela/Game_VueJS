@@ -1,0 +1,92 @@
+.btn{
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+    background-color: white;
+}
+
+.btn-azul{
+    background-color: #4186bb;
+}
+
+.btn-azul:hover{
+    background-color: #3478a3;
+    border-color: #4492ca;
+}
+
+.btn-verde{
+    background-color: #38bb4a;
+}
+.btn-verde:hover{
+    background-color: #319943;
+    border-color: #34af47;
+}
+
+.btn-vermelho{
+    background-color: #c72b1c;
+}
+
+.btn-vermelho:hover{
+    background-color: #ab2e1c;
+    border-color: #bc2d1b;
+}
+
+.btn-preto{
+    background-color: #222222;
+}
+
+.btn-preto:hover{
+    background-color: #353535;
+    border-color: #0e0e0e;
+}
+
+.btn-linha-azul{
+    border: 1px solid #4186bb;
+    color: #4186bb;
+}
+
+.btn-linha-azul:hover{
+    background-color: #4186bb;
+    border-color: #4492ca;
+    color: white;
+}
+
+.btn-linha-vermelho{
+    color: #c72b1c;
+    border: 1px solid #c72b1c;
+}
+.btn-linha-vermelho:hover{
+    background-color: #c72b1c;
+    border-color: #bc2d1b;
+    color: white;
+}
+
+.btn-linha-verde{
+    border: 1px solid #38bb4a;
+    color: #38bb4a;
+}
+
+.btn-linha-verde:hover{
+    background-color: #38bb4a;
+    border-color: #34af47;
+    color: white;
+}
+
+.btn-linha-preto{
+    border: 1px solid #222222;
+    color: #222222;
+}
+
+.btn-linha-preto:hover{
+    background-color: #222222;
+    border-color: #0e0e0e;
+    color:white;
+}

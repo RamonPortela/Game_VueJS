@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/botoes.css">
+</head>
+<body>
+
+    <div id="app">
+        <div class="container">
+            <div class="linha">
+                <div class="linha">
+                    <div class="col-md-6 div-hp">
+                        <div class="col-md-12" style="text-align:center; background-color: gainsboro">
+                            <h2>YOU</h2>
+                        </div>
+                        <div class="col-md-12" style="text-align:center; background-color: bisque">
+                            <div class="col-md-12 barra-hp">
+                                <div class="col-md-12 barra-hp-interna" :style="playerHP">
+                                </div>
+                                <p style="position: absolute; left: 50%">{{player.hp}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 div-hp">
+                        <div class="col-md-12" style="text-align: center; background-color: gainsboro">
+                            <h2>MOSNTER</h2>
+                        </div>
+                        <div class="col-md-12" style="text-align:center; background-color: bisque">
+                            <div class="col-md-12 barra-hp">
+                                <div class="col-md-12 barra-hp-interna" :style="monsterHP">
+                                </div>
+                                <p style="position: absolute; left: 50%">{{monster.hp}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="linha">
+                <div class="col-md-12" style="background-color: aqua;">
+                    <div class="col-md-2 col-xs-3 div-botoes-acao" v-if="!gameIsRunning">
+                        <button class="btn btn-verde">Iniciar Luta</button>
+                    </div>
+                    <div class="col-md-4 col-xs-8 div-botoes-acao" v-else>
+                        <button class="btn btn-vermelho">Atacar</button>
+                        <button class="btn btn-azul">Magia</button>
+                        <button class="btn btn-verde">Curar</button>
+                        <button class="btn btn-linha-preto">Fugir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="linha" v-if="showList">
+                <div class="col-md-12" style="background-color: lightgreen">
+                    <ul>
+                        <li v-for="action in actions">
+                            {{action}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                player: {hp: 100},
+                monster: {hp: 100},
+                gameIsRunning: false,
+                actions: []
+            },
+            methods:{
+
+            },
+            computed:{
+                showList: function(){
+                    if(this.gameIsRunning && (this.actions.length > 0))
+                        return true;
+                    else
+                        return false;
+                },
+                playerHP: function(){
+                    return 'width: ' + this.player.hp + '%';
+                },
+                monsterHP: function () {
+                    return 'width: ' + this.monster.hp + '%';
+                }
+            },
+            watch: {
+
+            }
+        });
+    </script>
+</body>
+</html>
