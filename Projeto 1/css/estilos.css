@@ -19,20 +19,30 @@ li:nth-child(even){
 
 .div-hp{
     padding: 0 !important;
+    text-align:center;
 }
 
 .barra-hp{
     padding: 0 !important;
     color: white;
-    text-align: center;
     background-color: red;
 }
+
 .barra-hp-interna{
     padding: 0 !important;
     height: 50px;
     background-color: #0ecd00;
     transition: width 1.5s;
 }
+
+.div-container{
+    box-shadow: 0 3px 6px 1px #777;
+}
+
+.div-listas{
+    margin-top:20px;
+}
+
 .div-botoes-acao{
     float:none;
     margin: 0 auto;

@@ -15,10 +15,10 @@
             <div class="linha">
                 <div class="linha">
                     <div class="col-md-6 div-hp">
-                        <div class="col-md-12" style="text-align:center; background-color: gainsboro">
+                        <div class="col-md-12">
                             <h2>YOU</h2>
                         </div>
-                        <div class="col-md-12" style="text-align:center; background-color: bisque">
+                        <div class="col-md-12">
                             <div class="col-md-12 barra-hp">
                                 <div class="col-md-12 barra-hp-interna" :style="playerHP">
                                 </div>
@@ -28,10 +28,10 @@
                     </div>
 
                     <div class="col-md-6 div-hp">
-                        <div class="col-md-12" style="text-align: center; background-color: gainsboro">
+                        <div class="col-md-12">
                             <h2>MONSTER</h2>
                         </div>
-                        <div class="col-md-12" style="text-align:center; background-color: bisque">
+                        <div class="col-md-12">
                             <div class="col-md-12 barra-hp">
                                 <div class="col-md-12 barra-hp-interna" :style="monsterHP">
                                 </div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="linha">
-                <div class="col-md-12" style="background-color: aqua;">
+                <div class="col-md-12 div-container">
                     <div class="col-md-2 col-xs-3 div-botoes-acao" v-if="!gameIsRunning">
                         <button class="btn btn-verde" @click="startGame">Start Game</button>
                     </div>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="linha" v-if="showList">
-                <div class="col-md-12" style="background-color: lightgreen">
+                <div class="col-md-12 div-container div-listas">
                     <ul>
                         <li v-for="action in actions">
                             {{action}}
@@ -151,17 +151,25 @@
                     }
 
                     if(this.player.hp <= 0) {
-                        this.gameIsRunning = false;
-                        if(confirm("You lost! Want to try fighting the monster again?")){
-                            this.startGame();
-                        }
+                        var vm = this;
+                        vm.gameIsRunning = false;
+                        setTimeout(function(){
+                            if(confirm("You lost! Want to try fighting the monster again?")){
+                                vm.startGame();
+                            }
+                        }, 100)
+
                         return;
                     }
                     if(this.monster.hp <= 0){
-                        this.gameIsRunning = false;
-                        if(confirm("You won! Want to try fighting the monster again?")){
-                            this.startGame();
-                        }
+                        var vm = this;
+                        vm.gameIsRunning = false;
+                        setTimeout(function(){
+                            if(confirm("You won! Want to try fighting the monster again?")){
+                                vm.startGame();
+                            }
+                        }, 100);
+
                         return;
                     }
                 },
@@ -169,7 +177,7 @@
             },
             computed:{
                 showList: function(){
-                    if(this.gameIsRunning && (this.actions.length > 0))
+                    if(this.actions.length > 0)
                         return true;
                     else
                         return false;
