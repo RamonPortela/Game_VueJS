@@ -29,7 +29,7 @@
 
                     <div class="col-md-6 div-hp">
                         <div class="col-md-12" style="text-align: center; background-color: gainsboro">
-                            <h2>MOSNTER</h2>
+                            <h2>MONSTER</h2>
                         </div>
                         <div class="col-md-12" style="text-align:center; background-color: bisque">
                             <div class="col-md-12 barra-hp">
@@ -45,13 +45,13 @@
             <div class="linha">
                 <div class="col-md-12" style="background-color: aqua;">
                     <div class="col-md-2 col-xs-3 div-botoes-acao" v-if="!gameIsRunning">
-                        <button class="btn btn-verde">Iniciar Luta</button>
+                        <button class="btn btn-verde" @click="startGame">Start Game</button>
                     </div>
                     <div class="col-md-4 col-xs-8 div-botoes-acao" v-else>
-                        <button class="btn btn-vermelho">Atacar</button>
-                        <button class="btn btn-azul">Magia</button>
-                        <button class="btn btn-verde">Curar</button>
-                        <button class="btn btn-linha-preto">Fugir</button>
+                        <button class="btn btn-vermelho" @click="playerAction(1)">Attack</button>
+                        <button class="btn btn-azul" @click="playerAction(2)">Special Attack</button>
+                        <button class="btn btn-verde" @click="playerAction(3)">Heal</button>
+                        <button class="btn btn-linha-preto" @click = "playerAction(4)">Flee</button>
                     </div>
                 </div>
             </div>
@@ -71,13 +71,101 @@
         var app = new Vue({
             el: '#app',
             data:{
-                player: {hp: 100},
-                monster: {hp: 100},
+                player: {hp: 100, maxHP: 100,
+                         normalAttack: function () {
+                             var damage = parseInt((Math.random() * 15) + 1);
+                             if(damage <= 5){
+                                 return 5;
+                             }
+                             return damage;
+                         },
+                         specialAttack: function(){
+                             var damage = parseInt((Math.random() * 35) + 1);
+                             if(damage <= 15){
+                                 return 15;
+                             }
+                             return damage;
+                         },
+                         heal: function () {
+                             var heal = parseInt((Math.random() * 15) + 1);
+                             if(heal <= 5){
+                                 return 5;
+                             }
+                             return heal;
+                         }
+                },
+                monster: {hp: 100,
+                          normalAttack: function () {
+                                var damage = parseInt((Math.random() * 15) + 1);
+                                if(damage <= 5){
+                                    return 5;
+                                }
+                                return damage;
+                          }},
                 gameIsRunning: false,
                 actions: []
             },
             methods:{
+                startGame: function () {
+                    this.player.hp = 100;
+                    this.monster.hp = 100;
+                    this.actions = [];
+                    this.gameIsRunning = true;
+                },
+                playerAction: function(action){
 
+                    if(action === 4){
+                        if(confirm("Are you sure you will run?")){
+                            this.gameIsRunning = false;
+                            return;
+                        }
+                    }
+
+                    var damage = this.monster.normalAttack()
+                    this.player.hp -= damage;
+                    this.actions.push("The monster attacked you for "+ damage +" damage");
+
+                    switch (action){
+                        case 1:
+                            var damage = this.player.normalAttack()
+                            this.monster.hp -= damage;
+                            this.actions.push("You attacked the monster for "+ damage +" damage");
+                            break;
+                        case 2:
+                            var damage = this.player.specialAttack();
+                            this.monster.hp -= damage;
+                            this.actions.push("You cast a spell on the monster and dealed "+ damage+" damage");
+                            break;
+                        case 3:
+                            var heal = this.player.heal();
+                            if(this.player.hp + heal > this.player.maxHP){
+                                this.player.hp = this.player.maxHP;
+                            }
+                            else{
+                                this.player.hp += heal;
+                            }
+                            this.actions.push("You healed yourself for "+ heal+ "hp");
+                            break;
+                        case 4:
+                            this.actions.push("You did nothing");
+                    }
+
+                    if(this.player.hp <= 0) {
+                        this.gameIsRunning = false;
+                        if(confirm("You lost! Want to try fighting the monster again?")){
+                            this.startGame();
+                        }
+                        return;
+                    }
+                    if(this.monster.hp <= 0){
+                        this.gameIsRunning = false;
+                        if(confirm("You won! Want to try fighting the monster again?")){
+                            this.startGame();
+                        }
+                        return;
+                    }
+                },
+                
             },
             computed:{
                 showList: function(){
