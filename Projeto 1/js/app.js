@@ -4,37 +4,8 @@
 var app = new Vue({
     el: '#app',
     data:{
-        player: {hp: 100, maxHP: 100,
-            normalAttack: function () {
-                var damage = parseInt((Math.random() * 15) + 1);
-                if(damage <= 5){
-                    return 5;
-                }
-                return damage;
-            },
-            specialAttack: function(){
-                var damage = parseInt((Math.random() * 35) + 1);
-                if(damage <= 15){
-                    return 15;
-                }
-                return damage;
-            },
-            heal: function () {
-                var heal = parseInt((Math.random() * 15) + 1);
-                if(heal <= 5){
-                    return 5;
-                }
-                return heal;
-            }
-        },
-        monster: {hp: 100,
-            normalAttack: function () {
-                var damage = parseInt((Math.random() * 15) + 1);
-                if(damage <= 5){
-                    return 5;
-                }
-                return damage;
-            }},
+        player: {hp: 100, maxHP: 100},
+        monster: {hp: 100},
         gameIsRunning: false,
         actions: []
     },
@@ -54,23 +25,21 @@ var app = new Vue({
                 }
             }
 
-            var damage = this.monster.normalAttack()
-            this.player.hp -= damage;
-            this.actions.push("The monster attacked you for "+ damage +" damage");
+            this.monsterAction();
 
             switch (action){
                 case 1:
-                    var damage = this.player.normalAttack()
+                    var damage = this.generateValue(5, 15);
                     this.monster.hp -= damage;
                     this.actions.push("You attacked the monster for "+ damage +" damage");
                     break;
                 case 2:
-                    var damage = this.player.specialAttack();
+                    var damage = this.generateValue(15, 35);
                     this.monster.hp -= damage;
                     this.actions.push("You cast a spell on the monster and dealed "+ damage+" damage");
                     break;
                 case 3:
-                    var heal = this.player.heal();
+                    var heal = this.generateValue(5, 15);
                     if(this.player.hp + heal > this.player.maxHP){
                         this.player.hp = this.player.maxHP;
                     }
@@ -83,6 +52,16 @@ var app = new Vue({
                     this.actions.push("You did nothing");
             }
 
+            this.checkWin();
+        },
+
+        monsterAction: function () {
+            var damage = this.generateValue(5, 15);
+            this.player.hp -= damage;
+            this.actions.push("The monster attacked you for "+ damage +" damage");
+        },
+
+        checkWin: function () {
             if(this.player.hp <= 0) {
                 var vm = this;
                 vm.gameIsRunning = false;
@@ -92,7 +71,7 @@ var app = new Vue({
                     }
                 }, 100)
 
-                return;
+                return true;
             }
             if(this.monster.hp <= 0){
                 var vm = this;
@@ -103,10 +82,14 @@ var app = new Vue({
                     }
                 }, 100);
 
-                return;
+                return true;
             }
         },
 
+        generateValue: function (min, max) {
+            var value = parseInt((Math.random() * max) + 1);
+            return Math.max(value, min);
+        }
     },
     computed:{
         showList: function(){
